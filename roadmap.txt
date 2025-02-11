@@ -1,0 +1,1 @@
+Duplicate:Initialise a list and in a for loop check if elements are in duplicate and then append.Return true if duplicate.Reture true if found once.
