@@ -1,1 +1,2 @@
 Duplicate:Initialise a list and in a for loop check if elements are in duplicate and then append.Return true if duplicate.Reture true if found once.
+Anagram:If the lengths of s and t are different, they cannot be anagrams, so we return False immediately.countS.get(s[i], 0) retrieves the count of s[i] in countS, defaulting to 0 if it doesn't exist, and then increments it.
