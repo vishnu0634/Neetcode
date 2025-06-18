@@ -1,4 +1,35 @@
 Duplicate:Initialise a list and in a for loop check if elements are in duplicate and then append.Return true if duplicate.Reture true if found once.
+class Solution:
+    def hasDuplicate(self, nums: List[int]) -> bool:
+        duplicate = []
+        for i in nums:
+            if i in duplicate:
+                return True
+            duplicate.append(i)
+        return False
+
 Anagram:If the lengths of s and t are different, they cannot be anagrams, so we return False immediately.countS.get(s[i], 0) retrieves the count of s[i] in countS, defaulting to 0 if it doesn't exist, and then increments it.
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
+        countS, countT = {}, {}
+
+        for i in range(len(s)):
+            countS[s[i]] = 1 + countS.get(s[i], 0)
+            countT[t[i]] = 1 + countT.get(t[i], 0)
+        return countS == countT
+
 Two Sum:In the brute force approach ,take a nested for loop for i and j and check if nums[i] + nums[j] = target and return the indexs[i,j].
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                if nums[i] + nums[j] == target:
+                    return [i, j]
+        return []
+
 Group Anagram: We use a hashmap to solve this question where we are using it to map the count of each character to the list of anagrams given.There is one for loop to go through the strings in which we initialize the value of count to [0]*26 and another for loop to count the characters in each string(do this by subtracting ASCII value).
+
+Top K Frequent elements: You have to find the top K occuring numbers . First count the no of occurrences of each no. Next this count will be used as an index to store the no occuring that many times.Then basically use a for loop to get the top K by traversing from len(freq)-1 to 0.
