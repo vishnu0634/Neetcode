@@ -1,4 +1,4 @@
-Duplicate:Initialise a list and in a for loop check if elements are in duplicate and then append.Return true if duplicate.Reture true if found once.
+1.Duplicate:Initialise a list and in a for loop check if elements are in duplicate and then append.Return true if duplicate.Reture true if found once.
 class Solution:
     def hasDuplicate(self, nums: List[int]) -> bool:
         duplicate = []
@@ -8,7 +8,7 @@ class Solution:
             duplicate.append(i)
         return False
 
-Anagram:If the lengths of s and t are different, they cannot be anagrams, so we return False immediately.countS.get(s[i], 0) retrieves the count of s[i] in countS, defaulting to 0 if it doesn't exist, and then increments it.
+2.Anagram:If the lengths of s and t are different, they cannot be anagrams, so we return False immediately.countS.get(s[i], 0) retrieves the count of s[i] in countS, defaulting to 0 if it doesn't exist, and then increments it.
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t):
@@ -21,7 +21,7 @@ class Solution:
             countT[t[i]] = 1 + countT.get(t[i], 0)
         return countS == countT
 
-Two Sum:In the brute force approach ,take a nested for loop for i and j and check if nums[i] + nums[j] = target and return the indexs[i,j].
+3.Two Sum:In the brute force approach ,take a nested for loop for i and j and check if nums[i] + nums[j] = target and return the indexs[i,j].
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         for i in range(len(nums)):
@@ -30,6 +30,80 @@ class Solution:
                     return [i, j]
         return []
 
-Group Anagram: We use a hashmap to solve this question where we are using it to map the count of each character to the list of anagrams given.There is one for loop to go through the strings in which we initialize the value of count to [0]*26 and another for loop to count the characters in each string(do this by subtracting ASCII value).
+4.Group Anagram: We use a hashmap to solve this question where we are using it to map the count of each character to the list of anagrams given.There is one for loop to go through the strings in which we initialize the value of count to [0]*26 and another for loop to count the characters in each string(do this by subtracting ASCII value).
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        res = defaultdict(list)
+        for s in strs:
+            count = [0] * 26
+            for c in s:
+                count[ord(c) - ord('a')] += 1
+            res[tuple(count)].append(s)
+        return list(res.values())
 
-Top K Frequent elements: You have to find the top K occuring numbers . First count the no of occurrences of each no. Next this count will be used as an index to store the no occuring that many times.Then basically use a for loop to get the top K by traversing from len(freq)-1 to 0.
+5.Top K Frequent elements: You have to find the top K occuring numbers . First count the no of occurrences of each no. Next this count will be used as an index to store the no occuring that many times.Then basically use a for loop to get the top K by traversing from len(freq)-1 to 0.
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        count = {}
+        freq = [[] for i in range(len(nums) + 1)]
+
+        for num in nums:
+            count[num] = 1 + count.get(num, 0)
+        for num, cnt in count.items():
+            freq[cnt].append(num)
+        
+        res = []
+        for i in range(len(freq) - 1, 0, -1):
+            for num in freq[i]: 
+                res.append(num)
+                if len(res) == k:
+                    return res
+                    
+6.Products of Array Except Self:Use a Prefix product and postfix product approach, First initialize res and then one for loop for prefix where the res[i]=prefix will store result of prefix then in the backward for loop multiply prefix product with postfix.
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        res = [1] * (len(nums))
+
+        prefix = 1
+        for i in range(len(nums)):
+            res[i] = prefix
+            prefix *= nums[i]
+        postfix = 1
+        for i in range(len(nums) - 1, -1, -1):
+            res[i] *= postfix
+            postfix *= nums[i]
+        return res
+
+7.Valid Suduko:Check every row, column, and 3×3 box for duplicates using sets — if any duplicates are found, it returns False; otherwise, it returns True.
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        for row in range(9):
+            seen = set()
+            for i in range(9):
+                if board[row][i] == ".": 
+                    continue
+                if board[row][i] in seen:
+                    return False
+                seen.add(board[row][i])
+        
+        for col in range(9):
+            seen = set()
+            for i in range(9):
+                if board[i][col] == ".":
+                    continue
+                if board[i][col] in seen:
+                    return False
+                seen.add(board[i][col])
+            
+        for square in range(9):
+            seen = set()
+            for i in range(3):
+                for j in range(3):
+                    row = (square//3) * 3 + i
+                    col = (square % 3) * 3 + j
+                    if board[row][col] == ".":
+                        continue
+                    if board[row][col] in seen:
+                        return False
+                    seen.add(board[row][col])
+        return True
